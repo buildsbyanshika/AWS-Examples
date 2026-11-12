@@ -1,2 +1,4 @@
 .venv/
 aws/
+.terraform*
+terraform.tfstate*
