@@ -1,0 +1,1 @@
+console.log('hello world form console and from "bucket-metadata-222" this bucket')

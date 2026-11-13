@@ -1,0 +1,16 @@
+{
+    "Objects": [
+        {
+            "Key": "index.html"
+        },
+        {
+            "Key": "myfile.txt"
+        },
+        {
+            "Key": "MySecretfolder/secret"
+        },
+        {
+            "Key": "second_file.txt"
+        }
+    ]
+}

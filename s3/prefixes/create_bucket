@@ -1,0 +1,57 @@
+ # make the bucket
+aws s3 mb s3://metadata-bucket-28393 --region ap-southeast-2   
+
+aws s3 mb s3://bucket-metadata-222 --region ap-southeast-2             # make the bucket
+
+ # put the object in bucket
+aws s3api put-object  --bucket metadata-bucket-28393 --key myfile.txt --body ../etags//myfile.txt --metadata KeyName1=bucket,KeyName2=experiment            # put the object in bucket
+
+# Find out Metadata in the attach file
+aws s3api head-object --bucket metadata-bucket-28393 --key myfile.txt --output json             # Find out Metadata in the attach file
+
+ # copy a file/object into this bucket
+aws s3 cp ../random/demo_file.txt s3://metadata-bucket-28393/second_file.txt                # copy a file/object into this bucket
+
+ # change the storage class of that file/object
+aws s3 cp ../random/demo_file.txt s3://metadata-bucket-28393/second_file.txt --storage-class STANDARD                        # change the storage class of that file/object
+
+ # change the bucket-policy of that bucket
+aws s3api put-bucket-policy --bucket metadata-bucket-28393 --policy file://policy.json
+
+aws s3api put-bucket-policy --bucket bucket-metadata-222 --policy file://policy2.json
+
+# change the ACL policy of that bucket
+aws s3api put-public-access-block --bucket  metadata-bucket-28393 --public-access-block file://public_access.json
+
+aws s3api put-public-access-block --bucket  bucket-metadata-222 --public-access-block file://public_access.json
+
+#Put wesbite.json
+aws s3api put-bucket-website --bucket metadata-bucket-28393 --website-configuration file://website.json
+
+aws s3api put-bucket-website --bucket bucket-metadata-222 --website-configuration file://website.json
+
+#Upload index.html file
+aws s3 cp index.html s3://metadata-bucket-28393
+
+# Ypload js file in 2nd bucket
+aws s3 cp hello.js s3://bucket-metadata-222
+
+# View the wesbite and see if the index.html present or not
+http://metadata-bucket-28393.s3-website-ap-southeast-2.amazonaws.com                    # from console > under Properties section
+
+
+
+
+
+
+# Cretae API gateway with mock response and then test the response
+curl -X POST -H "Content-Type: application/json" https://x4zsb3fh65.execute-api.ap-southeast-2.amazonaws.com/prod/hello
+
+
+
+
+# set cors on our bucket
+
+aws s3api put-bucket-cors \
+    --bucket metadata-bucket-28393 \
+    --cors-configuration file://cors.json

@@ -1,0 +1,21 @@
+{
+    "CORSRules": [
+        {
+            "AllowedOrigins": [
+                "https://x4zsb3fh65.execute-api.ap-southeast-2.amazonaws.com"
+            ],
+            "AllowedHeaders": [
+                "*"
+            ],
+            "AllowedMethods": [
+                "PUT",
+                "POST",
+                "DELETE"
+            ],
+            "MaxAgeSeconds": 3000,
+            "ExposeHeaders": [
+                "x-amz-server-side-encryption"
+            ]
+        }
+    ]
+}

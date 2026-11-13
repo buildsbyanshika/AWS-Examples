@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>My Website Home Page</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agrave+Pro:wght@100..700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Agrave Pro', sans-serif;
+                text-align: center;
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Welcome to my website</h1>
+    <p>Now hosted on Amazon S3!</p>
+    <script type="text/javascript" >
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://x4zsb3fh65.execute-api.ap-southeast-2.amazonaws.com/prod/hello", true);
+
+        // Send the proper header information along with the request
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = () => {
+        // Call a function when the state changes.
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+           const result = JSON.parse(xhr.responseText);
+           console.log('result', result);
+            // Request finished. Do processing here.
+        }
+        };
+
+        xhr.send("");
+        // xhr.send(new Int8Array());
+        // xhr.send(document);
+    </script>
+    </body>
+</html>
