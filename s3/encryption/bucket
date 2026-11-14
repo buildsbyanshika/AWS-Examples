@@ -1,0 +1,32 @@
+# Make a bucket
+aws s3 mb s3://encryption-trail-000 --region ap-southeast-2
+
+# Upload a file
+aws s3 cp ../etags/myfile.txt s3://encryption-trail-000/myfile.txt
+
+# find out courrent encryption status of the bucket
+aws s3api get-bucket-encryption --bucket encryption-trail-000 --output text
+
+
+# get a list of encryption keys
+aws kms list-keys --region ap-southeast-2
+
+# put the local delete deleted file again from aws
+aws s3api put-object --bucket encryption-trail-000 --key myfile.txt --body ../etags/myfile.txt --server-side-encryption aws:kms --ssekms-key-id 57e528bc-a579-47c2-890d-ad55e33c5976
+
+# Not working
+aws s3api put-object --bucket encryption-trail-000 --key myfile.txt --body ../etags/myfile.txt --sse-customer-algorithm AES256 --sse-customer-key $BASE_64_ENCODED_KEY --sse-customer-key-md5 $MD5_VALUE
+
+# to create ssec.key file and store "openssl rand 32 | base 64" value in it
+openssl rand -out ssec.key 32
+
+#
+aws s3 cp ../etags/myfile.txt s3://encryption-trail-000/myfile.txt --sse-c AES256 --sse-c-key fileb://ssec.key
+
+
+aws s3api head-object \
+  --bucket encryption-trail-000 \
+  --key demo_file.txt \
+  --sse-customer-algorithm AES256 \
+  --sse-customer-key "$ BASE_64_ENCODED_KEY" \
+  --checksum-mode ENABLED
