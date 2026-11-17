@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Check if the argument is not provide
+if [ -z "$1" ]; then
+    echo "Argument not provided."
+else 
+    export VPC_ID="$1"
+fi
+
+if [ -z "$2" ]; then
+    echo "Argument not provided."
+else 
+    export IGW_ID="$2"
+fi
+
+if [ -z "$3" ]; then
+    echo "Argument not provided."
+else 
+    export SUBNET_ID="$3"
+fi
+
+if [ -z "$4" ]; then
+    echo "Argument not provided."
+else 
+    export ASSOC_ID="$4"
+fi
+
+if [ -z "$5" ]; then
+    echo "Argument not provided."
+else 
+    export RT_ID="$5"
+fi
+
+
+# Detach IGW 
+aws ec2 detach-internet-gateway --internet-gateway-id $IGW_ID --vpc-id $VPC_ID --region ap-southeast-2
+
+
+# Delete IGW 
+aws ec2 delete-internet-gateway --internet-gateway-id $IGW_ID --region ap-southeast-2
+
+
+# Dissociate Subnet
+#$ASSOC_ID=$(aws ec2 describe-route-tables --route-table-ids $RT_ID --filters "Name=association.subnet-id,Values=$SUBNET_ID" --region ap-southeast-2 --query "RouteTables[].Associations[?SubnetId=='$SUBNET__ID'].RouteTableAssociationId[]" --output text)
+
+aws ec2 disassociate-route-table --association-id $ASSOC_ID --region ap-southeast-2
+
+
+# Delete SUBNET
+aws ec2 delete-subnet --subnet-id $SUBNET_ID --region ap-southeast-2
+
+
+# Delete Route Table
+# aws ec2 delete-route-table --route-table-id $RT_ID --region ap-southeast-2
+
+
+# Delete VPC
+aws ec2 delete-vpc --vpc-id $VPC_ID --region ap-southeast-2
